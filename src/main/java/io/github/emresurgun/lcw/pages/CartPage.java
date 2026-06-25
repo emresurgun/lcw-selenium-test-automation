@@ -19,11 +19,13 @@ public class CartPage {
 
     private static final Logger logger = LogManager.getLogger(CartPage.class);
 
+
     public CartPage(JsonReader jsonReader, WebDriver webDriver, WebDriverWait webDriverWait) {
         this.jsonReader = jsonReader;
         this.webDriver = webDriver;
         this.webDriverWait = webDriverWait;
     }
+
 
     public String getCartProductPrice() {
         logger.info("Sepetteki ürün fiyatı alınıyor.");
@@ -47,6 +49,7 @@ public class CartPage {
         return price;
     }
 
+
     public String getShippingPrice() {
         logger.info("Kargo fiyatı alınıyor.");
         By locator = jsonReader.getLocator("cartPage", "shippingPrice");
@@ -57,6 +60,7 @@ public class CartPage {
         logger.info("Kargo fiyatı: {}", price);
         return price;
     }
+
 
     public String getGeneralTotalPrice() {
         logger.info("Genel toplam fiyatı alınıyor.");
@@ -69,6 +73,7 @@ public class CartPage {
         return price;
     }
 
+
     public void increaseProductQuantity() {
         logger.info("Ürün adedi artırılıyor.");
         By increaseButtonLocator = jsonReader.getLocator("cartPage", "increaseQuantityButton");
@@ -77,6 +82,8 @@ public class CartPage {
         logger.info("Ürün adedi artırma butonuna tıklandı.");
 
     }
+
+
     public String getProductQuantity() {
         logger.info("Sepetteki ürün adedi alınıyor.");
         By quantityLocator = jsonReader.getLocator("cartPage", "productQuantity");
@@ -87,6 +94,7 @@ public class CartPage {
 
         return quantity;
     }
+
 
     public void cleanCart()
     {
@@ -100,6 +108,7 @@ public class CartPage {
         }catch (Exception e){}
     }
 
+
     public void confirmCleaning()
     {
         logger.info("Ürün silme onayı veriliyor.");
@@ -108,6 +117,7 @@ public class CartPage {
         confirmCleaningButton.click();
         logger.info("Ürün silme onayı verildi.");
     }
+
 
     public boolean isCartEmpty() {
         logger.info("Sepetin boş olduğu kontrol ediliyor.");

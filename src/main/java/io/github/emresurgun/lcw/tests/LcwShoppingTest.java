@@ -15,7 +15,7 @@ public class LcwShoppingTest extends BaseTest {
 
     private static final Logger logger = LogManager.getLogger(LcwShoppingTest.class);
 
-    @Test
+    @RepeatedTest(20)
     public void shouldCompleteShoppingCartFlow() {
         logger.info("LCW alışveriş sepeti test senaryosu başlatıldı.");
         HomePage homePage = new HomePage(jsonReader, webDriver, webDriverWait);
@@ -24,6 +24,8 @@ public class LcwShoppingTest extends BaseTest {
         CartPage cartPage = new CartPage(jsonReader, webDriver, webDriverWait);
 
         logger.info("Ana sayfa açılış adımı başlatıldı.");
+
+
         // Ana sayfa açılır
         homePage.openHomePage();
         homePage.closeCookieIfPresent();
@@ -138,6 +140,7 @@ public class LcwShoppingTest extends BaseTest {
         logger.info("Sepetin boş olduğu doğrulandı.");
         logger.info("LCW alışveriş sepeti test senaryosu başarıyla tamamlandı.");
     }
+
 
     private double parsePrice(String priceText) {
         logger.info("Fiyat metni sayısal değere dönüştürülüyor: {}", priceText);

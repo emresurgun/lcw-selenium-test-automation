@@ -39,6 +39,7 @@ public class BaseTest {
       logger.info("WebDriverWait oluşturuldu. Timeout: 20 saniye.");
    }
 
+
    @AfterEach
    public void tearDown()
    {

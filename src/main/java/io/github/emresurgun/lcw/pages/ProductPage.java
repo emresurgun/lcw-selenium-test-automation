@@ -21,12 +21,14 @@ public class ProductPage {
 
     private static final Logger logger = LogManager.getLogger(ProductPage.class);
 
+
     public ProductPage(JsonReader jsonReader, WebDriver webDriver, WebDriverWait webDriverWait)
     {
         this.jsonReader=jsonReader;
         this.webDriver=webDriver;
         this.webDriverWait=webDriverWait;
     }
+
 
     public void clickMoreProduct()
     {
@@ -41,14 +43,15 @@ public class ProductPage {
 
         );
         try{
-            Thread.sleep(2000);
+            Thread.sleep(500);
         }catch (Exception e){}
         moreProductButton.click();
         logger.info("Daha fazla ürün butonuna tıklandı.");
         try{
-            Thread.sleep(3000);
+            Thread.sleep(1000);
         }catch (Exception e){}
     }
+
 
     public void clickRandomProduct()
     {
@@ -71,7 +74,7 @@ public class ProductPage {
         );
 
         try{
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         }catch (Exception e){}
         selectedProduct.click();
         logger.info("Rastgele seçilen ürüne tıklandı. Index: {}", randomIndex);

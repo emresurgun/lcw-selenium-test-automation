@@ -15,17 +15,20 @@ public class HomePage {
 
     private static final Logger logger = LogManager.getLogger(HomePage.class);
 
+
     public HomePage(JsonReader jsonReader, WebDriver webDriver, WebDriverWait webDriverWait) {
         this.jsonReader = jsonReader;
         this.webDriver = webDriver;
         this.webDriverWait = webDriverWait;
     }
 
+
     public void openHomePage() {
         logger.info("LCW ana sayfası açılıyor.");
         webDriver.get("https://www.lcw.com/");
         logger.info("LCW ana sayfasına gidildi. URL: {}", webDriver.getCurrentUrl());
     }
+
 
     public boolean isHomePageOpen() {
         logger.info("LCW ana sayfasının açılıp açılmadığı kontrol ediliyor.");
@@ -41,6 +44,7 @@ public class HomePage {
 
         return isHomePageOpen;
     }
+
 
     public void closeCookieIfPresent() {
         logger.info("Çerez bildirimi kontrol ediliyor.");
@@ -75,6 +79,7 @@ public class HomePage {
         }
     }
 
+
     public void gotoLogin() {
         logger.info("Login sayfasına yönlendirme başlatıldı.");
 
@@ -87,6 +92,7 @@ public class HomePage {
 
         logger.info("Login butonuna tıklandı.");
     }
+
 
     public void searchProduct(String product) {
         logger.info("Ürün araması yapılıyor. Arama kelimesi: {}", product);

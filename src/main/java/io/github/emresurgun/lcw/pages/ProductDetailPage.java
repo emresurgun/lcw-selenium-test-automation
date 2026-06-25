@@ -20,12 +20,14 @@ public class ProductDetailPage {
 
     private static final Logger logger = LogManager.getLogger(ProductDetailPage.class);
 
+
     public ProductDetailPage(JsonReader jsonReader, WebDriver webDriver, WebDriverWait webDriverWait)
     {
         this.jsonReader=jsonReader;
         this.webDriver=webDriver;
         this.webDriverWait=webDriverWait;
     }
+
 
     private boolean trySizeCombination() {
         By bodySizeLocator = jsonReader.getLocator("productDetailPage", "availableBodySizes");
@@ -81,6 +83,7 @@ public class ProductDetailPage {
         return false;
     }
 
+
     private void waitSmall() {
         try {
             Thread.sleep(1000);
@@ -88,6 +91,7 @@ public class ProductDetailPage {
             Thread.currentThread().interrupt();
         }
     }
+
 
     public void selectAvailableProductCombination() {
         logger.info("Uygun ürün kombinasyonu seçimi başlatıldı.");
@@ -131,6 +135,7 @@ public class ProductDetailPage {
         throw new RuntimeException("Hiçbir renkte uygun beden/boy kombinasyonu bulunamadı.");
     }
 
+
     public void clickAddToCart()
     {
         logger.info("Sepete ekle butonuna tıklama işlemi başlatıldı.");
@@ -139,6 +144,7 @@ public class ProductDetailPage {
         addToCartButton.click();
         logger.info("Sepete ekle butonuna tıklandı.");
     }
+
 
     public void gotoCart()
     {
@@ -151,6 +157,7 @@ public class ProductDetailPage {
             Thread.sleep(1000);
         }catch (Exception e){}
     }
+
 
     public String getProductPrice() {
         logger.info("Ürün fiyatı alınıyor.");
