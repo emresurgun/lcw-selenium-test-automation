@@ -6,6 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Random;
@@ -15,6 +17,8 @@ public class ProductDetailPage {
     private JsonReader jsonReader;
     private WebDriver webDriver;
     private WebDriverWait webDriverWait;
+
+    private static final Logger logger = LogManager.getLogger(ProductDetailPage.class);
 
     public ProductDetailPage(JsonReader jsonReader, WebDriver webDriver, WebDriverWait webDriverWait)
     {
@@ -31,7 +35,7 @@ public class ProductDetailPage {
         List<WebElement> bodySizes = webDriver.findElements(bodySizeLocator);
 
         if (bodySizes.isEmpty()) {
-            System.out.println("Bu renkte seçilebilir beden yok.");
+            logger.warn("Bu renkte seçilebilir beden yok.");
             return false;
         }
 
@@ -41,16 +45,18 @@ public class ProductDetailPage {
             WebElement bodySize = bodySizes.get(bodyIndex);
             String bodyText = bodySize.getText();
 
-            System.out.println("Denenen beden: " + bodyText);
+            logger.info("Denenen beden: {}", bodyText);
 
             bodySize.click();
+
+            logger.info("Beden seçildi: {}", bodyText);
 
             waitSmall();
 
             List<WebElement> allLengthSizes = webDriver.findElements(allLengthSizeLocator);
 
             if (allLengthSizes.isEmpty()) {
-                System.out.println("Boy seçeneği yok. Beden yeterli: " + bodyText);
+                logger.info("Boy seçeneği yok. Beden yeterli: {}", bodyText);
                 return true;
             }
 
@@ -59,15 +65,17 @@ public class ProductDetailPage {
             if (!availableLengthSizes.isEmpty()) {
                 WebElement lengthSize = availableLengthSizes.get(0);
 
-                System.out.println("Seçilen beden: " + bodyText);
-                System.out.println("Seçilen boy: " + lengthSize.getText());
+                logger.info("Seçilen beden: {}", bodyText);
+                logger.info("Seçilen boy: {}", lengthSize.getText());
 
                 lengthSize.click();
+
+                logger.info("Boy seçildi: {}", lengthSize.getText());
 
                 return true;
             }
 
-            System.out.println(bodyText + " bedeni için uygun boy yok. Sonraki beden deneniyor.");
+            logger.warn("{} bedeni için uygun boy yok. Sonraki beden deneniyor.", bodyText);
         }
 
         return false;
@@ -82,17 +90,19 @@ public class ProductDetailPage {
     }
 
     public void selectAvailableProductCombination() {
+        logger.info("Uygun ürün kombinasyonu seçimi başlatıldı.");
         By colorOptionsLocator = jsonReader.getLocator("productDetailPage", "colorOptions");
 
         List<WebElement> colors = webDriver.findElements(colorOptionsLocator);
 
         if (colors.isEmpty()) {
-            System.out.println("Renk seçeneği yok, mevcut renkle kombinasyon aranıyor.");
+            logger.info("Renk seçeneği yok, mevcut renkle kombinasyon aranıyor.");
 
             if (trySizeCombination()) {
                 return;
             }
 
+            logger.error("Mevcut renkte uygun beden/boy kombinasyonu bulunamadı.");
             throw new RuntimeException("Mevcut renkte uygun beden/boy kombinasyonu bulunamadı.");
         }
 
@@ -101,41 +111,49 @@ public class ProductDetailPage {
 
             WebElement color = colors.get(colorIndex);
 
-            System.out.println("Denenen renk index: " + colorIndex);
+            logger.info("Denenen renk index: {}", colorIndex);
 
             color.click();
+
+            logger.info("Renk seçildi. Index: {}", colorIndex);
 
             waitSmall();
 
             if (trySizeCombination()) {
-                System.out.println("Uygun kombinasyon bulundu. Renk index: " + colorIndex);
+                logger.info("Uygun kombinasyon bulundu. Renk index: {}", colorIndex);
                 return;
             }
 
-            System.out.println("Bu renkte uygun kombinasyon bulunamadı. Sonraki renk deneniyor.");
+            logger.warn("Bu renkte uygun kombinasyon bulunamadı. Sonraki renk deneniyor.");
         }
 
+        logger.error("Hiçbir renkte uygun beden/boy kombinasyonu bulunamadı.");
         throw new RuntimeException("Hiçbir renkte uygun beden/boy kombinasyonu bulunamadı.");
     }
 
     public void clickAddToCart()
     {
+        logger.info("Sepete ekle butonuna tıklama işlemi başlatıldı.");
         By addToCartButtonLocator=jsonReader.getLocator("productDetailPage","addToCartButton");
         WebElement addToCartButton = webDriverWait.until(ExpectedConditions.elementToBeClickable(addToCartButtonLocator));
         addToCartButton.click();
+        logger.info("Sepete ekle butonuna tıklandı.");
     }
 
     public void gotoCart()
     {
+        logger.info("Sepete gitme işlemi başlatıldı.");
         By gotoCartButtonLocator=jsonReader.getLocator("productDetailPage","gotoCartButton");
         WebElement gotoCartButton = webDriverWait.until(ExpectedConditions.elementToBeClickable(gotoCartButtonLocator));
         gotoCartButton.click();
+        logger.info("Sepete git butonuna tıklandı.");
         try {
             Thread.sleep(1000);
         }catch (Exception e){}
     }
 
     public String getProductPrice() {
+        logger.info("Ürün fiyatı alınıyor.");
         By discountedPriceLocator = jsonReader.getLocator("productDetailPage", "discountedPrice");
         By normalPriceLocator = jsonReader.getLocator("productDetailPage", "normalPrice");
 
@@ -143,7 +161,7 @@ public class ProductDetailPage {
 
         if (!discountedPrices.isEmpty()) {
             String price = discountedPrices.get(0).getText().trim();
-            System.out.println("Ürün indirimli fiyatı: " + price);
+            logger.info("Ürün indirimli fiyatı: {}", price);
             return price;
         }
 
@@ -152,7 +170,7 @@ public class ProductDetailPage {
         );
 
         String price = normalPrice.getText().trim();
-        System.out.println("Ürün normal fiyatı: " + price);
+        logger.info("Ürün normal fiyatı: {}", price);
         return price;
     }
 

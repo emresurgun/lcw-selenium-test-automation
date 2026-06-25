@@ -1,6 +1,8 @@
 package io.github.emresurgun.lcw.pages;
 
 import io.github.emresurgun.lcw.utils.JsonReader;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -10,77 +12,93 @@ public class HomePage {
     private JsonReader jsonReader;
     private WebDriver webDriver;
     private WebDriverWait webDriverWait;
-    public HomePage(JsonReader jsonReader, WebDriver webDriver, WebDriverWait webDriverWait)
-    {
-        this.jsonReader=jsonReader;
-        this.webDriver=webDriver;
-        this.webDriverWait=webDriverWait;
+
+    private static final Logger logger = LogManager.getLogger(HomePage.class);
+
+    public HomePage(JsonReader jsonReader, WebDriver webDriver, WebDriverWait webDriverWait) {
+        this.jsonReader = jsonReader;
+        this.webDriver = webDriver;
+        this.webDriverWait = webDriverWait;
     }
 
-    public void openHomePage()
-    {
+    public void openHomePage() {
+        logger.info("LCW ana sayfası açılıyor.");
         webDriver.get("https://www.lcw.com/");
+        logger.info("LCW ana sayfasına gidildi. URL: {}", webDriver.getCurrentUrl());
     }
 
-    public boolean isHomePageOpen()
-    {
-        boolean isHomePageOpen = false;
+    public boolean isHomePageOpen() {
+        logger.info("LCW ana sayfasının açılıp açılmadığı kontrol ediliyor.");
 
-        String homePageTitle=webDriver.getTitle();
+        String homePageTitle = webDriver.getTitle();
 
-        By searchBoxLocator=jsonReader.getLocator("homePage","searchBox");
-        WebElement searchBox =  webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(searchBoxLocator));
+        By searchBoxLocator = jsonReader.getLocator("homePage", "searchBox");
+        WebElement searchBox = webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(searchBoxLocator));
 
-        if (homePageTitle.toLowerCase().contains("lcw")&&searchBox.isDisplayed())
-        {
-            isHomePageOpen = true;
-        }
+        boolean isHomePageOpen = homePageTitle.toLowerCase().contains("lcw") && searchBox.isDisplayed();
+
+        logger.info("Ana sayfa kontrol sonucu: {} | Title: {}", isHomePageOpen, homePageTitle);
+
         return isHomePageOpen;
     }
 
-    public void closeCookieIfPresent()
-    {
+    public void closeCookieIfPresent() {
+        logger.info("Çerez bildirimi kontrol ediliyor.");
+
         boolean cookieFlag = false;
-        int tryCount =0;
-        By cookieAcceptButtonLocator = jsonReader.getLocator("homePage","cookieAcceptButton");
-        while (!cookieFlag)
-        {
+        int tryCount = 0;
+
+        By cookieAcceptButtonLocator = jsonReader.getLocator("homePage", "cookieAcceptButton");
+
+        while (!cookieFlag) {
             try {
                 tryCount++;
-                if(tryCount>=15)
-                {
+
+                if (tryCount >= 15) {
+                    logger.info("Çerez bildirimi bulunamadı veya görünmedi.");
                     break;
                 }
+
                 WebElement cookieButton = webDriver.findElement(cookieAcceptButtonLocator);
-                if(cookieButton.isDisplayed())
-                {
+
+                if (cookieButton.isDisplayed()) {
                     Thread.sleep(100);
                     cookieButton.click();
-                    cookieFlag=true;
+                    cookieFlag = true;
+                    logger.info("Çerez bildirimi kapatıldı.");
                 }
-            }catch (NoSuchElementException e)
-            {
+            } catch (NoSuchElementException e) {
 
+            } catch (Exception e) {
+                logger.warn("Çerez bildirimi kapatılırken beklenmeyen bir durum oluştu: {}", e.getMessage());
             }
-            catch (Exception e)
-            {}
         }
     }
 
-    public void gotoLogin()
-    {
-        By loginButtonLocator=jsonReader.getLocator("homePage","loginButton");
-        WebElement loginButon=webDriverWait.until(ExpectedConditions.elementToBeClickable(loginButtonLocator));
+    public void gotoLogin() {
+        logger.info("Login sayfasına yönlendirme başlatıldı.");
+
+        By loginButtonLocator = jsonReader.getLocator("homePage", "loginButton");
+        WebElement loginButon = webDriverWait.until(
+                ExpectedConditions.elementToBeClickable(loginButtonLocator)
+        );
+
         loginButon.click();
+
+        logger.info("Login butonuna tıklandı.");
     }
 
-    public void searchProduct(String product)
-    {
-        By searchBoxLocator=jsonReader.getLocator("homePage","searchBox");
-        WebElement searchBox = webDriverWait.until(ExpectedConditions.elementToBeClickable(searchBoxLocator));
+    public void searchProduct(String product) {
+        logger.info("Ürün araması yapılıyor. Arama kelimesi: {}", product);
+
+        By searchBoxLocator = jsonReader.getLocator("homePage", "searchBox");
+        WebElement searchBox = webDriverWait.until(
+                ExpectedConditions.elementToBeClickable(searchBoxLocator)
+        );
+
         searchBox.sendKeys(product);
         searchBox.sendKeys(Keys.ENTER);
+
+        logger.info("Ürün araması gönderildi. Arama kelimesi: {}", product);
     }
-
-
 }
