@@ -72,6 +72,9 @@ public class HomePage {
                     logger.info("Çerez bildirimi kapatıldı.");
                 }
             } catch (NoSuchElementException e) {
+                try {
+                    Thread.sleep(500);
+                }catch (Exception ez){}
 
             } catch (Exception e) {
                 logger.warn("Çerez bildirimi kapatılırken beklenmeyen bir durum oluştu: {}", e.getMessage());
