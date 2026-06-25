@@ -33,8 +33,8 @@
       "value": "a.load-more__button"
     },
     "productLinks": {
-      "type": "css",
-      "value": ".product-card a.link.link__element"
+      "type": "xpath",
+      "value": "//a[contains(@class,'link__element') and contains(@class,'link') and not(contains(@href,'mix-match'))]"
     }
 },
   "productDetailPage": {

@@ -18,6 +18,7 @@ public class LoginPage {
 
     private static final Logger logger = LogManager.getLogger(LoginPage.class);
 
+
     public LoginPage(JsonReader jsonReader, WebDriver webDriver, WebDriverWait webDriverWait)
     {
         this.jsonReader=jsonReader;
@@ -34,6 +35,7 @@ public class LoginPage {
         logger.info("Mail alanı dolduruldu.");
     }
 
+
     public void fillPassword(String password)
     {
         logger.info("Şifre alanı dolduruluyor.");
@@ -45,6 +47,8 @@ public class LoginPage {
             Thread.sleep(1500);
         }catch (Exception e){}
     }
+
+
     public void clickLogin() {
         logger.info("Login butonuna tıklama işlemi başlatıldı.");
         By loginButtonLocator = jsonReader.getLocator("loginPage", "loginButton");
