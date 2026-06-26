@@ -2,6 +2,12 @@
 
 Java, Selenium WebDriver and JUnit 5 based end-to-end test automation project for LCW e-commerce shopping cart flow.
 
+## Project Context
+
+This project was developed as a Selenium test automation case study during my software testing internship at Albaraka Teknoloji.
+
+It automates an end-to-end shopping cart scenario on the public LCW website for learning and practice purposes. The project is not affiliated with LCW and does not include any internal company code, credentials, or private test environment data.
+
 ## Tech Stack
 
 - Java
