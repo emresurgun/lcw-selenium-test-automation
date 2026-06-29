@@ -22,17 +22,18 @@ public class BaseTest {
    protected WebDriverWait webDriverWait;
    protected JsonReader jsonReader;
 
+
    @BeforeEach
    public void setUp()
    {
       logger.info("Test kurulumu başlatıldı.");
-      jsonReader = new JsonReader("lcw.json");
+      jsonReader = new JsonReader();
       logger.info("JSON locator dosyası yüklendi.");
       chromeOptions = new ChromeOptions();
       logger.info("ChromeOptions oluşturuldu.");
       chromeOptions.addArguments("--start-maximized");
-      chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
       chromeOptions.addArguments("--disable-notifications");
+      chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
       webDriver = new ChromeDriver(chromeOptions);
       logger.info("ChromeDriver başlatıldı.");
       webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(20));

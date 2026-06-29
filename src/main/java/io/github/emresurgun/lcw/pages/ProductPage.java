@@ -34,6 +34,7 @@ public class ProductPage {
     {
         logger.info("Daha fazla ürün butonuna tıklama işlemi başlatıldı.");
         By moreProductButtonLocator=jsonReader.getLocator("productPage","moreProductButton");
+
         WebElement moreProductButton=webDriverWait.until(ExpectedConditions.elementToBeClickable(moreProductButtonLocator));
         ((JavascriptExecutor) webDriver).executeScript(
 

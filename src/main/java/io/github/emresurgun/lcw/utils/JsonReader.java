@@ -2,31 +2,68 @@ package io.github.emresurgun.lcw.utils;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.openqa.selenium.By;
 
-import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Comparator;
+import java.util.List;
 
 public class JsonReader {
 
-
     private JsonNode root;
+    private ObjectMapper mapper;
 
-    public JsonReader(String filePath) {
+    private static final String LOCATORS_FOLDER = "locators";
+
+    public JsonReader() {
         try {
-            InputStream inputStream = getClass()
-                    .getClassLoader()
-                    .getResourceAsStream(filePath);
+            mapper = new ObjectMapper();
+            root = mapper.createObjectNode();
 
-            if (inputStream == null) {
-                throw new RuntimeException("Locator file not found: " + filePath);
+            URL locatorsUrl = getClass()
+                    .getClassLoader()
+                    .getResource(LOCATORS_FOLDER);
+
+            if (locatorsUrl == null) {
+                throw new RuntimeException("Locator klasörü bulunamadı: " + LOCATORS_FOLDER);
             }
 
-            ObjectMapper mapper = new ObjectMapper();
-            root = mapper.readTree(inputStream);
+            Path locatorsPath = Path.of(locatorsUrl.toURI());
+
+            List<Path> jsonFiles = Files.walk(locatorsPath)
+                    .filter(Files::isRegularFile)
+                    .filter(path -> path.toString().endsWith(".json"))
+                    .sorted(Comparator.comparing(Path::toString))
+                    .toList();
+
+            for (Path jsonFile : jsonFiles) {
+                JsonNode jsonNode = mapper.readTree(jsonFile.toFile());
+                mergeJson(jsonNode);
+            }
 
         } catch (Exception e) {
-            throw new RuntimeException("Could not read locator JSON file: " + filePath, e);
+            throw new RuntimeException("Json dosyaları okunamadı.", e);
         }
+    }
+
+    private void mergeJson(JsonNode jsonNode) {
+        jsonNode.fields().forEachRemaining(pageEntry -> {
+            String pageName = pageEntry.getKey();
+            JsonNode pageNode = pageEntry.getValue();
+
+            if (!root.has(pageName)) {
+                ((ObjectNode) root).set(pageName, mapper.createObjectNode());
+            }
+
+            ObjectNode targetPageNode = (ObjectNode) root.get(pageName);
+
+            pageNode.fields().forEachRemaining(elementEntry ->
+                    targetPageNode.set(elementEntry.getKey(), elementEntry.getValue())
+            );
+        });
     }
 
     public String getType(String page, String element) {
@@ -59,6 +96,4 @@ public class JsonReader {
 
         throw new RuntimeException("Unknown locator type: " + type);
     }
-
-
 }

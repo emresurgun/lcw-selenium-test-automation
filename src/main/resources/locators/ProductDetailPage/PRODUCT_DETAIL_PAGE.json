@@ -1,0 +1,36 @@
+{
+  "productDetailPage": {
+    "colorOptions": {
+      "type": "xpath",
+      "value": "//a[contains(@class,'product-detail-colors__option')]"
+    },
+    "availableBodySizes": {
+      "type": "xpath",
+      "value": "//div[contains(@class,'product-options-label') and normalize-space()='Beden:']/following-sibling::div[contains(@class,'product-options-content')][1]//button[contains(@class,'option-size-box') and not(contains(@class,'option-size-box__out-of-stock'))]"
+    },
+    "allLengthSizes": {
+      "type": "xpath",
+      "value": "//div[contains(@class,'product-options-label') and normalize-space()='Boy:']/following-sibling::div[contains(@class,'product-options-content')][1]//button[contains(@class,'option-size-box')]"
+    },
+    "availableLengthSizes": {
+      "type": "xpath",
+      "value": "//div[contains(@class,'product-options-label') and normalize-space()='Boy:']/following-sibling::div[contains(@class,'product-options-content')][1]//button[contains(@class,'option-size-box') and not(contains(@class,'option-size-box__out-of-stock'))]"
+    },
+    "addToCartButton": {
+      "type": "xpath",
+      "value": "//button[.//span[normalize-space()='Sepete Ekle']]"
+    },
+    "gotoCartButton": {
+      "type": "xpath",
+      "value": "//button[.//span[normalize-space()='Sepete Git']]"
+    },
+    "discountedPrice": {
+      "type": "css",
+      "value": ".product-detail__price .price-in-cart"
+    },
+    "normalPrice": {
+      "type": "css",
+      "value": ".product-detail__price .current-price"
+    }
+  }
+}

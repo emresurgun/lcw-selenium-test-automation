@@ -58,7 +58,7 @@ public class HomePage {
             try {
                 tryCount++;
 
-                if (tryCount >= 15) {
+                if (tryCount >= 20) {
                     logger.info("Çerez bildirimi bulunamadı veya görünmedi.");
                     break;
                 }
@@ -101,9 +101,7 @@ public class HomePage {
         logger.info("Ürün araması yapılıyor. Arama kelimesi: {}", product);
 
         By searchBoxLocator = jsonReader.getLocator("homePage", "searchBox");
-        WebElement searchBox = webDriverWait.until(
-                ExpectedConditions.elementToBeClickable(searchBoxLocator)
-        );
+        WebElement searchBox = webDriverWait.until(ExpectedConditions.elementToBeClickable(searchBoxLocator));
 
         searchBox.sendKeys(product);
         searchBox.sendKeys(Keys.ENTER);

@@ -1,0 +1,41 @@
+{
+  "homePage": {
+    "searchBox": {
+      "type": "id",
+      "value": "search-form__input-field__search-input"
+    },
+    "cookieAcceptButton": {
+      "type": "id",
+      "value": "cookieseal-banner-accept"
+    },
+    "loginButton": {
+      "type": "css",
+      "value": "span.login-button"
+    }
+  },
+  "loginPage": {
+    "mailForm": {
+      "type": "id",
+      "value": "form-input-emailAndPhone"
+    },
+    "passwordForm": {
+      "type": "id",
+      "value": "form-input-password"
+    },
+    "loginButton": {
+      "type": "css",
+      "value": "span.lcw-button__text"
+    }
+  },
+  "productPage": {
+    "moreProductButton":{
+      "type": "css",
+      "value": "a.load-more__button"
+    },
+    "productLinks": {
+      "type": "xpath",
+      "value": "//a[contains(@class,'link__element') and contains(@class,'link') and not(contains(@href,'mix-match'))]"
+    }
+}
+
+}

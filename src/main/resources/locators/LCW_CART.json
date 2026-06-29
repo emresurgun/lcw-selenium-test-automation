@@ -1,0 +1,40 @@
+{
+  "cartPage": {
+    "cartSaleProductPrice": {
+      "type": "css",
+      "value": "div.shopping-cart-item__price--sale"
+    },
+    "cartProductPrice": {
+      "type": "css",
+      "value": "div.shopping-cart-item__price"
+    },
+    "shippingPrice": {
+      "type": "xpath",
+      "value": "//span[normalize-space()='Kargo Bedeli']/following-sibling::span[contains(@class,'shopping-cart-summary__amount')]"
+    },
+    "generalTotalPrice": {
+      "type": "css",
+      "value": "span.shopping-cart-summary__amount--grand-total"
+    },
+    "increaseQuantityButton": {
+      "type": "css",
+      "value": "button.shopping-cart-item__qty-btn[aria-label*='Art']"
+    },
+    "productQuantity": {
+      "type": "css",
+      "value": "span.shopping-cart-item__qty-value"
+    },
+    "deleteProductButton": {
+      "type": "css",
+      "value": "button.shopping-cart-item__icon-btn[aria-label='Sil']"
+    },
+    "confirmDeleteButton": {
+      "type": "xpath",
+      "value": "//div[contains(@class,'shopping-cart-modal')]//button[.//span[normalize-space()='Sil']]"
+    },
+    "emptyCartTitle": {
+      "type": "xpath",
+      "value": "//*[normalize-space()='Sepetin Boş']"
+    }
+  }
+}

@@ -55,6 +55,10 @@ public class LoginPage {
         WebElement loginButton = webDriverWait.until(ExpectedConditions.elementToBeClickable(loginButtonLocator));
         loginButton.click();
         logger.info("Login butonuna tıklandı.");
+
+        try {
+            Thread.sleep(15000);
+        }catch (Exception e){}
         }
     }
 

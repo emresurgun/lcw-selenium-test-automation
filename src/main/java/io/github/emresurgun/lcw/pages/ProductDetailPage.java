@@ -172,9 +172,7 @@ public class ProductDetailPage {
             return price;
         }
 
-        WebElement normalPrice = webDriverWait.until(
-                ExpectedConditions.visibilityOfElementLocated(normalPriceLocator)
-        );
+        WebElement normalPrice = webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(normalPriceLocator));
 
         String price = normalPrice.getText().trim();
         logger.info("Ürün normal fiyatı: {}", price);
