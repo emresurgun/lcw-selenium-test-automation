@@ -34,11 +34,6 @@ public class LcwShoppingTest extends BaseTest {
         );
         logger.info("Ana sayfa doğrulaması tamamlandı.");
 
-         //homePage.gotoLogin();
-         //loginPage.fillMail("emresurgun1@gmail.com");
-         //loginPage.fillPassword("Emre2004");
-         //loginPage.clickLogin();
-
 
        logger.info("Ürün arama adımı başlatıldı.");
        // Ürün aranır
